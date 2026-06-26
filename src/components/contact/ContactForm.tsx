@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User, Mail, Phone, MessageSquare, Send, CheckCircle, AlertCircle } from "lucide-react";
 import type { ContactFormData } from "@/types";
+import { supabase } from "@/lib/supabase";
 
 interface ContactFormProps {
   propertyId?: string;
@@ -37,6 +38,7 @@ export function ContactForm({ propertyId }: ContactFormProps) {
   const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   function handleChange(key: keyof ContactFormData, value: string) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -51,8 +53,22 @@ export function ContactForm({ propertyId }: ContactFormProps) {
       return;
     }
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
+    setSubmitError(null);
+
+    const { error } = await supabase.from("contacts").insert({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      phone: form.phone?.trim() || null,
+      message: form.message.trim(),
+    });
+
     setLoading(false);
+
+    if (error) {
+      setSubmitError("Something went wrong. Please try again or email us directly.");
+      return;
+    }
+
     setSubmitted(true);
   }
 
@@ -71,6 +87,17 @@ export function ContactForm({ propertyId }: ContactFormProps) {
               <p className="font-semibold text-sm">Message sent!</p>
               <p className="text-xs mt-0.5">An agent will reach out within 24 hours.</p>
             </div>
+          </motion.div>
+        )}
+        {submitError && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="mb-6 flex items-center gap-3 rounded-xl bg-red-50 border border-red-200 p-4 text-red-800"
+          >
+            <AlertCircle className="h-5 w-5 shrink-0" />
+            <p className="text-sm">{submitError}</p>
           </motion.div>
         )}
       </AnimatePresence>
