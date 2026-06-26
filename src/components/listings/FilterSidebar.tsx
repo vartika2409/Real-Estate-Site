@@ -18,6 +18,13 @@ const SORT_OPTIONS: { label: string; value: PropertyFilters["sortBy"] }[] = [
   { label: "Price: Low to High", value: "price-asc" },
   { label: "Price: High to Low", value: "price-desc" },
 ];
+const BUDGET_RANGES = [
+  { label: "All", min: 0, max: 0 },
+  { label: "Under ₹50 Lakh", min: 0, max: 5_000_000 },
+  { label: "₹50 L – ₹1 Cr", min: 5_000_000, max: 10_000_000 },
+  { label: "₹1 Cr – ₹3 Cr", min: 10_000_000, max: 30_000_000 },
+  { label: "Above ₹3 Cr", min: 30_000_000, max: 0 },
+];
 
 export function FilterSidebar({ initialFilters }: FilterSidebarProps) {
   const router = useRouter();
@@ -26,10 +33,20 @@ export function FilterSidebar({ initialFilters }: FilterSidebarProps) {
     status: "All",
     sortBy: "newest",
     minPrice: 0,
-    maxPrice: 10_000_000,
+    maxPrice: 0,
     city: "",
     ...initialFilters,
   });
+
+  function activeBudgetIndex(): number {
+    const min = filters.minPrice ?? 0;
+    const max = filters.maxPrice ?? 0;
+    if (min === 0 && max === 5_000_000) return 1;
+    if (min === 5_000_000 && max === 10_000_000) return 2;
+    if (min === 10_000_000 && max === 30_000_000) return 3;
+    if (min === 30_000_000) return 4;
+    return 0;
+  }
   const [open, setOpen] = useState(false);
 
   function apply(updated: Partial<PropertyFilters>) {
@@ -103,6 +120,26 @@ export function FilterSidebar({ initialFilters }: FilterSidebarProps) {
           placeholder="e.g. Mumbai, Delhi..."
           className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-primary"
         />
+      </div>
+
+      <div>
+        <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Budget</label>
+        <div className="flex flex-wrap gap-2">
+          {BUDGET_RANGES.map((r, i) => (
+            <button
+              key={r.label}
+              onClick={() => apply({ ...filters, minPrice: r.min, maxPrice: r.max })}
+              className={cn(
+                "rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors",
+                activeBudgetIndex() === i
+                  ? "bg-brand-primary border-brand-primary text-white"
+                  : "border-slate-200 text-slate-600 hover:border-brand-primary hover:text-brand-primary"
+              )}
+            >
+              {r.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div>

@@ -102,7 +102,7 @@ export async function getPaginatedProperties(
   if (filters.minPrice) {
     query = query.gte("price", filters.minPrice);
   }
-  if (filters.maxPrice && filters.maxPrice < 10_000_000) {
+  if (filters.maxPrice && filters.maxPrice < 100_000_000) {
     query = query.lte("price", filters.maxPrice);
   }
 

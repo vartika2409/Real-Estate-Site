@@ -7,11 +7,18 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatPrice(price: number, status: PropertyStatus): string {
-  const formatted = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(price);
+  let formatted: string;
+  if (price >= 10_000_000) {
+    const crore = price / 10_000_000;
+    const display = Number(crore.toFixed(2));
+    formatted = `₹${display % 1 === 0 ? display.toFixed(0) : display} Crore`;
+  } else if (price >= 100_000) {
+    const lakh = price / 100_000;
+    const display = Number(lakh.toFixed(2));
+    formatted = `₹${display % 1 === 0 ? display.toFixed(0) : display} Lakh`;
+  } else {
+    formatted = `₹${price.toLocaleString("en-IN")}`;
+  }
   return status === "For Rent" ? `${formatted}/mo` : formatted;
 }
 
@@ -44,7 +51,7 @@ export function parseFilterQuery(
     type: (get("type") as PropertyFilters["type"]) ?? "All",
     status: (get("status") as PropertyFilters["status"]) ?? "All",
     minPrice: Number(get("minPrice") ?? 0),
-    maxPrice: Number(get("maxPrice") ?? 10_000_000),
+    maxPrice: Number(get("maxPrice") ?? 100_000_000),
     city: get("city") ?? "",
     sortBy: (get("sortBy") as PropertyFilters["sortBy"]) ?? "newest",
   };
