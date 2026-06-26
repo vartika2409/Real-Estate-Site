@@ -15,7 +15,7 @@ export default function AboutPage() {
         <p className="text-brand-accent text-sm font-semibold tracking-widest uppercase mb-3">Our Story</p>
         <h1 className="text-4xl sm:text-5xl font-bold text-white">About LuxEstate</h1>
         <p className="mt-4 text-slate-300 max-w-2xl mx-auto text-lg">
-          Founded in 2010, LuxEstate has grown into one of the most respected real estate firms in the United States,
+          Founded in 2010, LuxEstate has grown into one of the most respected real estate firms in India,
           with offices in 8 cities and over 50 dedicated agents.
         </p>
       </div>

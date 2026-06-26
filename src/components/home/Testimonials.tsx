@@ -10,28 +10,28 @@ import type { Testimonial } from "@/types";
 const TESTIMONIALS: Testimonial[] = [
   {
     id: "t1",
-    name: "James & Claire Whitmore",
-    role: "Home Buyers — Austin, TX",
+    name: "Rahul & Priya Sharma",
+    role: "Home Buyers — Mumbai, MH",
     quote:
-      "LuxEstate found us our dream home in under three weeks. Sarah's knowledge of the Austin market was extraordinary, and she negotiated $45,000 off the asking price. We couldn't be happier.",
+      "LuxEstate found us our dream home in under three weeks. Sarah&apos;s knowledge of the Mumbai market was extraordinary, and she negotiated ₹18 lakhs off the asking price. We couldn&apos;t be happier.",
     avatar: "https://images.unsplash.com/photo-1552058544-f2b08422138a?w=150&q=80",
     rating: 5,
   },
   {
     id: "t2",
     name: "Priya Nair",
-    role: "Property Investor — Miami, FL",
+    role: "Property Investor — Bengaluru, KA",
     quote:
-      "I've worked with many agencies, but LuxEstate is truly in a class of its own. Their data-driven approach helped me identify a waterfront property with exceptional appreciation potential. Already up 22%.",
+      "I&apos;ve worked with many agencies, but LuxEstate is truly in a class of its own. Their data-driven approach helped me identify a waterfront property in Chennai with exceptional appreciation potential. Already up 22%.",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&q=80",
     rating: 5,
   },
   {
     id: "t3",
-    name: "Robert Chen",
-    role: "Corporate Renter — New York, NY",
+    name: "Arjun Mehta",
+    role: "Corporate Renter — New Delhi, NCR",
     quote:
-      "Relocating for work is stressful, but LuxEstate made it effortless. They arranged virtual tours, handled all paperwork remotely, and we were settled in our Upper West Side apartment within days of arriving.",
+      "Relocating for work is stressful, but LuxEstate made it effortless. They arranged virtual tours, handled all paperwork remotely, and we were settled in our Delhi apartment within days of arriving.",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&q=80",
     rating: 5,
   },

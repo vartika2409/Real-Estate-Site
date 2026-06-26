@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s | LuxEstate",
   },
   description:
-    "Discover exceptional properties across the United States. Browse houses, apartments, villas, and commercial spaces with LuxEstate.",
+    "Discover exceptional properties across India. Browse houses, apartments, villas, and commercial spaces with LuxEstate.",
   openGraph: {
     siteName: "LuxEstate",
     type: "website",

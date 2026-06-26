@@ -52,8 +52,8 @@ export function HeroSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-6 text-lg text-slate-300 max-w-2xl mx-auto"
         >
-          Explore thousands of premium properties across the United States. From urban penthouses to
-          serene waterfront estates — your perfect home is waiting.
+          Explore thousands of premium properties across India. From urban penthouses to
+          serene beachfront estates — your perfect home is waiting.
         </motion.p>
 
         <motion.form

@@ -100,7 +100,7 @@ export function FilterSidebar({ initialFilters }: FilterSidebarProps) {
           value={filters.city ?? ""}
           onChange={(e) => setFilters((f) => ({ ...f, city: e.target.value }))}
           onBlur={() => apply(filters)}
-          placeholder="e.g. Austin, Miami..."
+          placeholder="e.g. Mumbai, Delhi..."
           className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-primary"
         />
       </div>

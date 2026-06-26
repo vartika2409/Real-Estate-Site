@@ -23,7 +23,7 @@ function validate(data: ContactFormData): FormErrors {
 const fields = [
   { key: "name" as const, label: "Full Name", icon: User, type: "text", placeholder: "John Smith", required: true },
   { key: "email" as const, label: "Email Address", icon: Mail, type: "email", placeholder: "john@example.com", required: true },
-  { key: "phone" as const, label: "Phone Number", icon: Phone, type: "tel", placeholder: "+1 (555) 000-0000", required: false },
+  { key: "phone" as const, label: "Phone Number", icon: Phone, type: "tel", placeholder: "+91 XXXXX XXXXX", required: false },
 ];
 
 export function ContactForm({ propertyId }: ContactFormProps) {

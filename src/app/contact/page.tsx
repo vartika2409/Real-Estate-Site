@@ -35,9 +35,9 @@ export default async function ContactPage({ searchParams }: PageProps) {
             <h2 className="text-2xl font-bold text-slate-900 mb-8">Find Us</h2>
             <div className="space-y-6">
               {[
-                { icon: MapPin, label: "Address", value: "200 Main Street, Suite 400\nAustin, TX 78701" },
-                { icon: Phone, label: "Phone", value: "+1 (512) 555-0100" },
-                { icon: Mail, label: "Email", value: "hello@luxestate.com" },
+                { icon: MapPin, label: "Address", value: "A-104, Sector 18\nNoida, Uttar Pradesh – 201301" },
+                { icon: Phone, label: "Phone", value: "+91 98765 43210" },
+                { icon: Mail, label: "Email", value: "info@luxestate.in" },
                 { icon: Clock, label: "Office Hours", value: "Monday – Friday: 9am – 6pm\nSaturday: 10am – 4pm" },
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="flex gap-4">

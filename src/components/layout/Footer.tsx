@@ -83,15 +83,15 @@ export function Footer() {
           <ul className="space-y-3 text-sm">
             <li className="flex items-start gap-3 text-slate-400">
               <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-brand-accent" />
-              <span>200 Main Street, Suite 400<br />Austin, TX 78701</span>
+              <span>A-104, Sector 18<br />Noida, Uttar Pradesh – 201301</span>
             </li>
             <li className="flex items-center gap-3 text-slate-400">
               <Phone className="h-4 w-4 shrink-0 text-brand-accent" />
-              <a href="tel:+15125550100" className="hover:text-white transition-colors">+1 (512) 555-0100</a>
+              <a href="tel:+919876543210" className="hover:text-white transition-colors">+91 98765 43210</a>
             </li>
             <li className="flex items-center gap-3 text-slate-400">
               <Mail className="h-4 w-4 shrink-0 text-brand-accent" />
-              <a href="mailto:hello@luxestate.com" className="hover:text-white transition-colors">hello@luxestate.com</a>
+              <a href="mailto:info@luxestate.in" className="hover:text-white transition-colors">info@luxestate.in</a>
             </li>
           </ul>
         </div>
