@@ -25,44 +25,16 @@ export function SignInModal({ onClose }: SignInModalProps) {
     setError(null);
     setSuccess(null);
 
-    // Detect misconfigured client before making any network call
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    if (!supabaseUrl || supabaseUrl.includes("placeholder")) {
-      const msg = "Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to your Vercel environment variables.";
-      console.error("[auth]", msg);
-      setError(msg);
-      setLoading(false);
-      return;
-    }
-
-    // Quick connectivity probe — distinguishes CORS/network from auth errors
-    try {
-      const probe = await fetch(`${supabaseUrl}/auth/v1/settings`, {
-        headers: { apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "" },
-      });
-      console.log("[auth] probe status:", probe.status);
-    } catch (probeErr) {
-      console.error("[auth] connectivity probe failed:", probeErr);
-      setError(
-        `Cannot reach Supabase Auth (${supabaseUrl}). ` +
-        "Fix: In Supabase Dashboard → Authentication → URL Configuration, add your Vercel URL to Site URL and Redirect URLs, then redeploy."
-      );
-      setLoading(false);
-      return;
-    }
-
     try {
       if (tab === "signin") {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        console.log("[auth] signIn response:", { data, error });
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) {
           setError(error.message);
         } else {
           onClose();
         }
       } else {
-        const { data, error } = await supabase.auth.signUp({ email, password });
-        console.log("[auth] signUp response:", { data, error });
+        const { error } = await supabase.auth.signUp({ email, password });
         if (error) {
           setError(error.message);
         } else {
@@ -72,13 +44,7 @@ export function SignInModal({ onClose }: SignInModalProps) {
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
-      console.error("[auth] Unexpected error:", err);
-      // "Failed to fetch" means the network call never reached Supabase
-      if (message.toLowerCase().includes("failed to fetch")) {
-        setError("Could not reach Supabase. Check that NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in your Vercel environment variables, then redeploy.");
-      } else {
-        setError(message);
-      }
+      setError(message || "An unexpected error occurred. Please try again.");
     }
 
     setLoading(false);
