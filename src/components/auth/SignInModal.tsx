@@ -35,6 +35,22 @@ export function SignInModal({ onClose }: SignInModalProps) {
       return;
     }
 
+    // Quick connectivity probe — distinguishes CORS/network from auth errors
+    try {
+      const probe = await fetch(`${supabaseUrl}/auth/v1/settings`, {
+        headers: { apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "" },
+      });
+      console.log("[auth] probe status:", probe.status);
+    } catch (probeErr) {
+      console.error("[auth] connectivity probe failed:", probeErr);
+      setError(
+        `Cannot reach Supabase Auth (${supabaseUrl}). ` +
+        "Fix: In Supabase Dashboard → Authentication → URL Configuration, add your Vercel URL to Site URL and Redirect URLs, then redeploy."
+      );
+      setLoading(false);
+      return;
+    }
+
     try {
       if (tab === "signin") {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
