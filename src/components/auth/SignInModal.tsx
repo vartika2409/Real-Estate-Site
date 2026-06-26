@@ -25,20 +25,43 @@ export function SignInModal({ onClose }: SignInModalProps) {
     setError(null);
     setSuccess(null);
 
-    if (tab === "signin") {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) {
-        setError(error.message);
+    // Detect misconfigured client before making any network call
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    if (!supabaseUrl || supabaseUrl.includes("placeholder")) {
+      const msg = "Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to your Vercel environment variables.";
+      console.error("[auth]", msg);
+      setError(msg);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      if (tab === "signin") {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        console.log("[auth] signIn response:", { data, error });
+        if (error) {
+          setError(error.message);
+        } else {
+          onClose();
+        }
       } else {
-        onClose();
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        console.log("[auth] signUp response:", { data, error });
+        if (error) {
+          setError(error.message);
+        } else {
+          setSuccess("Account created! Check your email to confirm, then sign in.");
+          setTab("signin");
+        }
       }
-    } else {
-      const { error } = await supabase.auth.signUp({ email, password });
-      if (error) {
-        setError(error.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error("[auth] Unexpected error:", err);
+      // "Failed to fetch" means the network call never reached Supabase
+      if (message.toLowerCase().includes("failed to fetch")) {
+        setError("Could not reach Supabase. Check that NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in your Vercel environment variables, then redeploy.");
       } else {
-        setSuccess("Account created! Check your email to confirm, then sign in.");
-        setTab("signin");
+        setError(message);
       }
     }
 
